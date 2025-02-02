@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
+import GuestLayout from "./layouts/GuestLayout";
 
 function App() {
   const [data, setData] = useState(null);
@@ -15,19 +16,7 @@ function App() {
 
   return (
     <div>
-      <h1>React + Flask + Vite</h1>
-      {data ? (
-        <div>
-          <p>{data.message}</p>
-          <ul>
-            {data.items.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <p>Loading...</p>
-      )}
+      <GuestLayout></GuestLayout>
     </div>
   );
 }
