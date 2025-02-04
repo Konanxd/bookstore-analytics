@@ -1,23 +1,33 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import "./App.css";
-import GuestLayout from "./layouts/GuestLayout";
+import React, { useEffect } from 'react';
+import {
+  Routes,
+  Route,
+  useLocation
+} from 'react-router-dom';
+
+import './css/style.css';
+
+import './charts/ChartjsConfig';
+
+// Import pages
+import Dashboard from './pages/Dashboard';
 
 function App() {
-  const [data, setData] = useState(null);
+
+  const location = useLocation();
 
   useEffect(() => {
-    // Fetch data from Flask backend
-    axios
-      .get("http://127.0.0.1:5000/api/data")
-      .then((response) => setData(response.data))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+    document.querySelector('html').style.scrollBehavior = 'auto'
+    window.scroll({ top: 0 })
+    document.querySelector('html').style.scrollBehavior = ''
+  }, [location.pathname]); // triggered on route change
 
   return (
-    <div>
-      <GuestLayout></GuestLayout>
-    </div>
+    <>
+      <Routes>
+        <Route exact path="/" element={<Dashboard />} />
+      </Routes>
+    </>
   );
 }
 
