@@ -1,6 +1,6 @@
 from app.utils.database import db
 
-class Pesnan(db.Model):
+class Pesanan(db.Model):
     __tablename__ = 'pesanan'
 
     id_pesanan = db.Column(db.Integer, primary_key=True)

@@ -1,7 +1,7 @@
-from app.models.book import Buku
+from app.models.buku import Buku
 from app.utils.database import db
 
-class BookService():
+class BukuService():
     @staticmethod
     def get_all_books():
         return Buku.query.all()
