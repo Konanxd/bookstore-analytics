@@ -7,7 +7,8 @@ import "./charts/ChartjsConfig";
 
 // Import pages
 import Dashboard from "./pages/Dashboard";
-import Analytics from "./pages/Analytics";
+import Buku from "./pages/Buku";
+import Pelanggan from "./pages/Pelanggan";
 
 function App() {
   const location = useLocation();
@@ -22,7 +23,8 @@ function App() {
     <>
       <Routes>
         <Route exact path='/' element={<Dashboard />} />
-        <Route exact path='/analytics' element={<Analytics />} />
+        <Route exact path='/buku' element={<Buku />} />
+        <Route exact path='/pelanggan' element={<Pelanggan />} />
       </Routes>
     </>
   );
