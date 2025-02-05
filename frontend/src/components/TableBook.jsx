@@ -11,6 +11,7 @@ const tableHeaders = [
   "Genre",
   "Harga",
   "Stok",
+  "Aksi",
 ];
 
 const tableFields = [
@@ -25,17 +26,17 @@ const tableFields = [
   "stok",
 ];
 
-const commonCellClass = "py-5";
+const commonCellClass = "py-5 relative";
 const commonHeaderClass =
   "py-5 xs:px-5 sm:px-5 md:px-5 lg:px-3 cursor-pointer hover:bg-gray-200/50 dark:hover:bg-gray-500/20";
 
-export default function Table({ data = sampleData }) {
+export default function TableBook({ data, onEdit, onDelete }) {
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "ascending",
   });
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
-  // Sort handler
   const handleSort = (field) => {
     let direction = "ascending";
 
@@ -46,19 +47,16 @@ export default function Table({ data = sampleData }) {
     setSortConfig({ key: field, direction });
   };
 
-  // Sort function
   const sortedData = React.useMemo(() => {
     if (!sortConfig.key) return data;
 
     return [...data].sort((a, b) => {
-      // Handle numeric fields
       if (sortConfig.key === "id" || sortConfig.key === "stok") {
         return sortConfig.direction === "ascending"
           ? a[sortConfig.key] - b[sortConfig.key]
           : b[sortConfig.key] - a[sortConfig.key];
       }
 
-      // Handle price (remove currency symbol and convert to number)
       if (sortConfig.key === "harga") {
         const priceA = parseFloat(a[sortConfig.key].replace(/[^0-9.]/g, ""));
         const priceB = parseFloat(b[sortConfig.key].replace(/[^0-9.]/g, ""));
@@ -67,14 +65,12 @@ export default function Table({ data = sampleData }) {
           : priceB - priceA;
       }
 
-      // Handle string fields
       return sortConfig.direction === "ascending"
         ? a[sortConfig.key].localeCompare(b[sortConfig.key])
         : b[sortConfig.key].localeCompare(a[sortConfig.key]);
     });
   }, [data, sortConfig]);
 
-  // Sort indicator component
   const SortIndicator = ({ field }) => {
     if (sortConfig.key !== field) return <span className="ml-1"></span>;
     return (
@@ -84,8 +80,75 @@ export default function Table({ data = sampleData }) {
     );
   };
 
+  const SettingsDropdown = ({ rowIndex }) => {
+    return (
+      <div className="absolute top-full right-0 z-10 bg-white dark:bg-gray-700 shadow-lg rounded-md border dark:border-gray-600">
+        <button
+          onClick={() => onEdit(rowIndex)}
+          className="flex items-center w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="mr-2"
+          >
+            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+          </svg>
+          Edit
+        </button>
+        <button
+          onClick={() => onDelete(rowIndex)}
+          className="flex items-center w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 text-red-500"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="mr-2"
+          >
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            <line x1="10" x2="10" y1="11" y2="17" />
+            <line x1="14" x2="14" y1="11" y2="17" />
+          </svg>
+          Hapus
+        </button>
+      </div>
+    );
+  };
+
+  const MoreVerticalIcon = () => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="1" />
+      <circle cx="12" cy="5" r="1" />
+      <circle cx="12" cy="19" r="1" />
+    </svg>
+  );
+
   return (
-    // table
     <table className="w-full border-collapse dark:bg-gray-600/10 bg-white rounded-md drop-shadow-md">
       <thead>
         <tr className="bg-gray-100/50 dark:bg-gray-200/10 border-b-2 border-gray-300 dark:border-gray-500 text-gray-500 dark:text-white capitalize font-semibold text-center">
@@ -93,18 +156,18 @@ export default function Table({ data = sampleData }) {
             <th
               key={header}
               className={commonHeaderClass}
-              onClick={() => handleSort(tableFields[index])}
+              onClick={() => index < 9 && handleSort(tableFields[index])}
             >
               <div className="flex items-center justify-center gap-1">
                 {header}
-                <SortIndicator field={tableFields[index]} />
+                {index < 9 && <SortIndicator field={tableFields[index]} />}
               </div>
             </th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {sortedData.map((row) => (
+        {sortedData.map((row, index) => (
           <tr
             key={row.id}
             className="border-b-2 border-gray-200 dark:border-gray-400 last:border-0 text-gray-500 dark:text-white text-center"
@@ -119,6 +182,21 @@ export default function Table({ data = sampleData }) {
                 {row[field]}
               </td>
             ))}
+            <td className={`${commonCellClass} relative`}>
+              <div className="flex justify-center">
+                <button
+                  onClick={() =>
+                    setActiveDropdown(activeDropdown === index ? null : index)
+                  }
+                  className="p-1 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-full"
+                >
+                  <MoreVerticalIcon />
+                </button>
+                {activeDropdown === index && (
+                  <SettingsDropdown rowIndex={index} />
+                )}
+              </div>
+            </td>
           </tr>
         ))}
       </tbody>
@@ -126,7 +204,7 @@ export default function Table({ data = sampleData }) {
   );
 }
 
-Table.propTypes = {
+TableBook.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -139,5 +217,7 @@ Table.propTypes = {
       harga: PropTypes.string.isRequired,
       stok: PropTypes.number.isRequired,
     })
-  ),
+  ).isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
