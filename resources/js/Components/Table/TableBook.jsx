@@ -38,10 +38,7 @@ export default function TableBook({ books }) {
 
     return (
         <div className="mx-10 mt-10 flex flex-col gap-4">
-            <CrudHead
-                title="momok"
-                onClick={() => setTambahOpen(!TambahOpen)}
-            />
+            <CrudHead title="test" onClick={() => setTambahOpen(!TambahOpen)} />
             {TambahOpen && <FormBuku onClick={() => setTambahOpen(false)} />}
 
             <table className="drop-shadow-m w-full border-collapse overflow-hidden rounded-md bg-white drop-shadow-md">

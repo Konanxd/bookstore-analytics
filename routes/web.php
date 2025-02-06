@@ -7,16 +7,19 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
 
-Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
+
+Route::get('/', [BukuController::class, 'index'])->name('buku.index');
+
+// Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
 Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
 Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
 Route::delete('/buku/{id}', [BukuController::class, 'delete'])->name('buku.delete');
