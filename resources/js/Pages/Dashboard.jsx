@@ -1,5 +1,5 @@
-import Navbar from '@/Components/navbar';
 import TableBook from '@/Components/Table/TableBook';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 export default function Dashboard() {
     const booksData = [
@@ -27,11 +27,10 @@ export default function Dashboard() {
         },
     ];
     return (
-        <div className="flex flex-row">
-            <Navbar />
+        <AuthenticatedLayout>
             <div className="h-screen w-full overflow-y-scroll">
                 <TableBook books={booksData}></TableBook>
             </div>
-        </div>
+        </AuthenticatedLayout>
     );
 }

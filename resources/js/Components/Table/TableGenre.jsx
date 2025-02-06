@@ -1,48 +1,27 @@
 import { useState } from 'react';
 import CrudHead from '../CrudHead';
-import FormBuku from '../Form/FormBuku';
+import FormGenre from '../Form/FormGenre';
 import PenIcon from '../Icon/PenIcon';
 import TrashIcon from '../Icon/TrashIcon';
 
-const tableHeaders = [
-    'ID Buku',
-    'Judul',
-    'Penulis',
-    'ISBN',
-    'Penerbit',
-    'Tahun Terbit',
-    'Genre',
-    'Harga',
-    'Stok',
-    'Aksi',
-];
+const tableHeaders = ['id_genre', 'nama_genre', 'akis'];
 
-const tableFields = [
-    'id',
-    'judul',
-    'penulis',
-    'isbn',
-    'penerbit',
-    'tahun_terbit',
-    'genre',
-    'harga',
-    'stok',
-];
+const tableFields = ['id_genre', 'nama_genre'];
 
 const commonCellClass = 'py-5 relative';
 const commonHeaderClass = 'py-5 xs:px-5 sm:px-5 md:px-5 lg:px-3 capitalize';
 
-export default function TableBook({ books }) {
+export default function TableGenre({ genre }) {
     const [TambahOpen, setTambahOpen] = useState(false);
     const [EditOpen, setEditOpen] = useState(false);
 
     return (
         <div className="mx-10 mt-10 flex flex-col gap-4">
             <CrudHead
-                title="momok"
+                title="genre"
                 onClick={() => setTambahOpen(!TambahOpen)}
             />
-            {TambahOpen && <FormBuku onClick={() => setTambahOpen(false)} />}
+            {TambahOpen && <FormGenre onClick={() => setTambahOpen(false)} />}
 
             <table className="drop-shadow-m w-full border-collapse overflow-hidden rounded-md bg-white drop-shadow-md">
                 <thead>
@@ -57,14 +36,14 @@ export default function TableBook({ books }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {books.map((book) => (
+                    {genre.map((genre) => (
                         <tr
-                            key={book.id}
+                            key={genre.id}
                             className="border-b-2 border-gray-200 text-center"
                         >
                             {tableFields.map((field) => (
                                 <td key={field} className={commonCellClass}>
-                                    {book[field]}
+                                    {genre[field]}
                                 </td>
                             ))}
                             <td className={commonCellClass}>
@@ -74,7 +53,7 @@ export default function TableBook({ books }) {
                                 >
                                     <PenIcon className="size-3 fill-white" />
                                     {EditOpen && (
-                                        <FormBuku
+                                        <FormGenre
                                             onClick={() => setEditOpen(false)}
                                         />
                                     )}
