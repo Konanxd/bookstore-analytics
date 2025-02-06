@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BukuController;
+use App\Http\Controllers\PenulisController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +16,16 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
+Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
+Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
+Route::delete('/buku/{id}', [BukuController::class, 'delete'])->name('buku.delete');
+
+Route::get('/penulis', [PenulisController::class, 'index'])->name('penulis.index');
+Route::post('/penulis', [PenulisController::class, 'store'])->name('penulis.store');
+Route::put('/penulis', [PenulisController::class, 'update'])->name('penulis.update');
+Route::delete('/penulis', [PenulisController::class, 'delete'])->name('penulis.delete');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -24,4 +36,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

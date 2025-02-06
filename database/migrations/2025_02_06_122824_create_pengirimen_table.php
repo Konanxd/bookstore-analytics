@@ -11,9 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengirimen', function (Blueprint $table) {
-            $table->id();
+        Schema::create('pengiriman', function (Blueprint $table) {
+            $table->id('id_pengiriman');
+            $table->date('tanggal_pengiriman');
+            $table->string('status_pengiriman');
+            $table->string('no_resi');
             $table->timestamps();
+
+            $table->foreignId('id_pembayaran');
+            $table->foreignId('id_pesanan');
         });
     }
 
