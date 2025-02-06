@@ -15,6 +15,7 @@ import Pengiriman from "./pages/OrderManage/Pengiriman";
 import Penerbit from "./pages/DataManage/Penerbit";
 import Genre from "./pages/DataManage/Genre";
 import Penulis from "./pages/DataManage/Penulis";
+import Main from "./pages/main";
 
 function App() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function App() {
     <>
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
+        <Route exact path="/dashboard/main" element={<Main />} />
         <Route exact path="/data/buku" element={<Buku />} />
         <Route exact path="/data/pelanggan" element={<Pelanggan />} />
         <Route exact path="/data/penerbit" element={<Penerbit />} />

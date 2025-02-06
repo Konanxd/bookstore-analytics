@@ -195,7 +195,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to="/buku"
+                              to="/dashboard/main"
                               className={({ isActive }) =>
                                 "block transition duration-150 truncate " +
                                 (isActive
@@ -255,6 +255,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
+                            {/* head icon */}
                             <svg
                               className={`shrink-0 fill-current ${
                                 pathname === "/" || pathname.includes("data")
@@ -264,17 +265,17 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
                               xmlns="http://www.w3.org/2000/svg"
                               width="16"
                               height="16"
-                              viewBox="0 0 16 16"
+                              viewBox="0 0 24 24"
                             >
-                              <path d="M5.936.278A7.983 7.983 0 0 1 8 0a8 8 0 1 1-8 8c0-.722.104-1.413.278-2.064a1 1 0 1 1 1.932.516A5.99 5.99 0 0 0 2 8a6 6 0 1 0 6-6c-.53 0-1.045.076-1.548.21A1 1 0 1 1 5.936.278Z" />
-                              <path d="M6.068 7.482A2.003 2.003 0 0 0 8 10a2 2 0 1 0-.518-3.932L3.707 2.293a1 1 0 0 0-1.414 1.414l3.775 3.775Z" />
+                              <path d="M12 2C6.48 2 2 4.48 2 7v10c0 2.52 4.48 5 10 5s10-2.48 10-5V7c0-2.52-4.48-5-10-5zm0 2c4.41 0 8 1.79 8 3s-3.59 3-8 3-8-1.79-8-3 3.59-3 8-3zm0 16c-4.41 0-8-1.79-8-3v-3.07c1.93 1.39 5.17 2.07 8 2.07s6.07-.68 8-2.07V17c0 1.21-3.59 3-8 3zm0-7c-4.41 0-8-1.79-8-3V8.93c1.93 1.39 5.17 2.07 8 2.07s6.07-.68 8-2.07V10c0 1.21-3.59 3-8 3z" />
                             </svg>
+
                             <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200 capitalize">
                               data management
                             </span>
                           </div>
                           {/* Icon */}
-                          <div className="flex shrink-0 ml-2">
+                          <div className="flex shrink-0 ml-2 bgre">
                             <svg
                               className={`w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500 ${
                                 open && "rotate-180"
@@ -400,6 +401,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
+                            {/* head icon */}
                             <svg
                               className={`shrink-0 fill-current ${
                                 pathname === "/" || pathname.includes("order")
@@ -409,11 +411,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
                               xmlns="http://www.w3.org/2000/svg"
                               width="16"
                               height="16"
-                              viewBox="0 0 16 16"
+                              viewBox="0 0 24 24"
                             >
-                              <path d="M5.936.278A7.983 7.983 0 0 1 8 0a8 8 0 1 1-8 8c0-.722.104-1.413.278-2.064a1 1 0 1 1 1.932.516A5.99 5.99 0 0 0 2 8a6 6 0 1 0 6-6c-.53 0-1.045.076-1.548.21A1 1 0 1 1 5.936.278Z" />
-                              <path d="M6.068 7.482A2.003 2.003 0 0 0 8 10a2 2 0 1 0-.518-3.932L3.707 2.293a1 1 0 0 0-1.414 1.414l3.775 3.775Z" />
+                              <path d="M21 6h-3V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2H3a1 1 0 0 0-1 1v12a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a1 1 0 0 0-1-1zM8 4h8v2H8V4zm12 15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8h16v11zM7 10h10a1 1 0 0 1 0 2H7a1 1 0 0 1 0-2zm0 4h7a1 1 0 0 1 0 2H7a1 1 0 0 1 0-2z" />
                             </svg>
+
                             <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                               Order Management
                             </span>
