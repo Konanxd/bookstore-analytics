@@ -3,15 +3,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from app.utils.database import db
-
-app = Flask(__name__)
-CORS(app)
-app.config.from_object(Config)
-
-db.init_app(app)
-
-from app.routes import register_routes
-register_routes(app)
+from app import app
 
 if __name__ == "__main__":
     with app.app_context():

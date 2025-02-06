@@ -1,36 +1,15 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const tableHeaders = [
-  "ID Buku",
-  "Judul",
-  "Penulis",
-  "ISBN",
-  "Penerbit",
-  "Tahun Terbit",
-  "Genre",
-  "Harga",
-  "Stok",
-  "Aksi",
-];
+const tableHeaders = ["ID Penulis", "Nama Penulis", "Aksi"];
 
-const tableFields = [
-  "id",
-  "judul",
-  "penulis",
-  "isbn",
-  "penerbit",
-  "tahun_terbit",
-  "genre",
-  "harga",
-  "stok",
-];
+const tableFields = ["id_penerbit", "nama_penulis"];
 
 const commonCellClass = "py-5 relative";
 const commonHeaderClass =
   "py-5 xs:px-5 sm:px-5 md:px-5 lg:px-3 cursor-pointer hover:bg-gray-200/50 dark:hover:bg-gray-500/20";
 
-export default function TableBook({ data, onEdit, onDelete }) {
+export default function TableCustomer({ data, onEdit, onDelete }) {
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "ascending",
@@ -51,21 +30,19 @@ export default function TableBook({ data, onEdit, onDelete }) {
     if (!sortConfig.key) return data;
 
     return [...data].sort((a, b) => {
-      if (sortConfig.key === "id" || sortConfig.key === "stok") {
+      if (sortConfig.key === "id_penerbit") {
         return sortConfig.direction === "ascending"
           ? a[sortConfig.key] - b[sortConfig.key]
           : b[sortConfig.key] - a[sortConfig.key];
       }
 
-      if (sortConfig.key === "harga") {
-        const priceA = parseFloat(a[sortConfig.key].replace(/[^0-9.]/g, ""));
-        const priceB = parseFloat(b[sortConfig.key].replace(/[^0-9.]/g, ""));
-        return sortConfig.direction === "ascending" ? priceA - priceB : priceB - priceA;
+      if (["nama_penulis"].includes(sortConfig.key)) {
+        return sortConfig.direction === "ascending"
+          ? a[sortConfig.key].localeCompare(b[sortConfig.key])
+          : b[sortConfig.key].localeCompare(a[sortConfig.key]);
       }
 
-      return sortConfig.direction === "ascending"
-        ? a[sortConfig.key].localeCompare(b[sortConfig.key])
-        : b[sortConfig.key].localeCompare(a[sortConfig.key]);
+      return 0;
     });
   }, [data, sortConfig]);
 
@@ -150,11 +127,11 @@ export default function TableBook({ data, onEdit, onDelete }) {
             <th
               key={header}
               className={commonHeaderClass}
-              onClick={() => index < 9 && handleSort(tableFields[index])}
+              onClick={() => index < 4 && handleSort(tableFields[index])}
             >
               <div className='flex items-center justify-center gap-1'>
                 {header}
-                {index < 9 && <SortIndicator field={tableFields[index]} />}
+                {index < 4 && <SortIndicator field={tableFields[index]} />}
               </div>
             </th>
           ))}
@@ -163,14 +140,11 @@ export default function TableBook({ data, onEdit, onDelete }) {
       <tbody>
         {sortedData.map((row, index) => (
           <tr
-            key={row.id}
+            key={row.id_penulis}
             className='border-b-2 border-gray-200 dark:border-gray-400 last:border-0 text-gray-500 dark:text-white text-center'
           >
             {tableFields.map((field) => (
-              <td
-                key={`${row.id}-${field}`}
-                className={`${commonCellClass} ${field === "judul" ? "line-clamp-4" : ""}`}
-              >
+              <td key={`${row.id_penulis}-${field}`} className={commonCellClass}>
                 {row[field]}
               </td>
             ))}
@@ -192,18 +166,11 @@ export default function TableBook({ data, onEdit, onDelete }) {
   );
 }
 
-TableBook.propTypes = {
+TableCustomer.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      judul: PropTypes.string.isRequired,
-      penulis: PropTypes.string.isRequired,
-      isbn: PropTypes.string.isRequired,
-      penerbit: PropTypes.string.isRequired,
-      tahun_terbit: PropTypes.string.isRequired,
-      genre: PropTypes.string.isRequired,
-      harga: PropTypes.string.isRequired,
-      stok: PropTypes.number.isRequired,
+      id_penerbit: PropTypes.number.isRequired,
+      nama_penulis: PropTypes.string.isRequired,
     })
   ).isRequired,
   onEdit: PropTypes.func.isRequired,
